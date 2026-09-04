@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "v14FooterNote",
+  "position": {
+    "x": 24,
+    "y": 680,
+    "z": 13000,
+    "height": 24,
+    "width": 1232,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Source: AMD 10-K filings FY2020–FY2025 · Values in USD millions · FY2026E from DCF model",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "8px",
+                      "color": "#8A8D91"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

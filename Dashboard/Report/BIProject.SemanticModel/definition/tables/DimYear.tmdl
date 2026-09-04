@@ -1,0 +1,48 @@
+table DimYear
+	lineageTag: 9818a535-1241-456c-b632-8d0c52cd9066
+
+	column Year
+		dataType: string
+		lineageTag: 4a84daa6-71db-4fef-9add-f2d27079cc8d
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 94e02754-ca2d-4fb7-93ec-28837771655f
+		summarizeBy: sum
+		sourceColumn: YearSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearEndDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ca7c30bd-f206-4323-8f60-030020c02386
+		summarizeBy: none
+		sourceColumn: YearEndDate
+
+		variation Variation
+			isDefault
+			relationship: e56d10f8-99f2-48de-9503-bd12da871e07
+			defaultHierarchy: LocalDateTable_37da4cf3-adf2-4830-8975-fbf40e000680.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition DimYear = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\DCF\Final\aidashboard\artifacts\DimYear.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Year", type text}, {"YearSort", Int64.Type}, {"YearEndDate", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

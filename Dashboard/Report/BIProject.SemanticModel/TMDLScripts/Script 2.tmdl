@@ -1,0 +1,66 @@
+createOrReplace
+
+    ref table Financials
+
+        measure 'Revenue YoY ▲▼' =
+                IF(
+                    ISBLANK([Revenue YoY %]),
+                    BLANK(),
+                    IF([Revenue YoY %] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000051
+
+        measure 'Net Income YoY ▲▼' =
+                IF(
+                    ISBLANK([Net Income YoY %]),
+                    BLANK(),
+                    IF([Net Income YoY %] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000052
+
+        measure 'FCF YoY ▲▼' =
+                IF(
+                    ISBLANK([FCF YoY %]),
+                    BLANK(),
+                    IF([FCF YoY %] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000053
+
+        measure 'Gross Profit YoY ▲▼' =
+                IF(
+                    ISBLANK([Gross Profit YoY %]),
+                    BLANK(),
+                    IF([Gross Profit YoY %] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000054
+
+        measure 'Operating Income YoY ▲▼' =
+                IF(
+                    ISBLANK([Operating Income YoY %]),
+                    BLANK(),
+                    IF([Operating Income YoY %] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000055
+
+        measure 'Gross Margin Δ pp ▲▼' =
+                IF(
+                    ISBLANK([Gross Margin Δ pp]),
+                    BLANK(),
+                    IF([Gross Margin Δ pp] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000056
+
+        measure 'Operating Margin Δ pp ▲▼' =
+                IF(
+                    ISBLANK([Operating Margin Δ pp]),
+                    BLANK(),
+                    IF([Operating Margin Δ pp] >= 0, "▲", "▼")
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000057

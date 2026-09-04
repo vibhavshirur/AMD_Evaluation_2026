@@ -1,0 +1,9 @@
+relationship e56d10f8-99f2-48de-9503-bd12da871e07
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimYear.YearEndDate
+	toColumn: LocalDateTable_37da4cf3-adf2-4830-8975-fbf40e000680.Date
+
+relationship AutoDetected_15428368-8ba7-4221-96c0-99873458f594
+	fromColumn: Financials.Year
+	toColumn: DimYear.Year
+

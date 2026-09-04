@@ -1,0 +1,613 @@
+createOrReplace
+
+    ref table Financials
+
+        measure 'Net Revenue' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Net revenue"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000001
+
+        measure 'Gross Profit' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Gross profit"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000002
+
+        measure 'Operating Income' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Operating income"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000003
+
+        measure 'Net Income' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Net income"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000004
+
+        measure 'Operating Cash Flow' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Operating cash flow"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000005
+
+        measure 'Free Cash Flow' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Free cash flow"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000006
+
+        measure 'CapEx' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "CapEx"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000007
+
+        measure 'EPS Diluted' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "EPS diluted",
+                    Financials[Statement] = "Income Statement"
+                )
+            formatString: "$0.00"
+            displayFolder: "01 · Income Statement"
+            lineageTag: 00000001-0000-0000-0000-000000000041
+
+        measure 'Gross Margin %' =
+                DIVIDE(
+                    [Gross Profit],
+                    [Net Revenue]
+                )
+            formatString: "0.0%"
+            displayFolder: "02 · Margins"
+            lineageTag: 00000001-0000-0000-0000-000000000008
+
+        measure 'Operating Margin %' =
+                DIVIDE(
+                    [Operating Income],
+                    [Net Revenue]
+                )
+            formatString: "0.0%"
+            displayFolder: "02 · Margins"
+            lineageTag: 00000001-0000-0000-0000-000000000009
+
+        measure 'Net Margin %' =
+                DIVIDE(
+                    [Net Income],
+                    [Net Revenue]
+                )
+            formatString: "0.0%"
+            displayFolder: "02 · Margins"
+            lineageTag: 00000001-0000-0000-0000-000000000010
+
+        measure 'FCF Margin %' =
+                DIVIDE(
+                    [Free Cash Flow],
+                    [Net Revenue]
+                )
+            formatString: "0.0%"
+            displayFolder: "02 · Margins"
+            lineageTag: 00000001-0000-0000-0000-000000000011
+
+        measure 'DSO (days)' =
+                365 *
+                DIVIDE(
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Accounts receivable"
+                    ),
+                    [Net Revenue]
+                )
+            formatString: "0.0"" days"""
+            displayFolder: "03 · Working Capital"
+            lineageTag: 00000001-0000-0000-0000-000000000012
+
+        measure 'DIO (days)' =
+                365 *
+                DIVIDE(
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Inventories"
+                    ),
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Cost of sales"
+                    )
+                )
+            formatString: "0.0"" days"""
+            displayFolder: "03 · Working Capital"
+            lineageTag: 00000001-0000-0000-0000-000000000013
+
+        measure 'DPO (days)' =
+                365 *
+                DIVIDE(
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Accounts payable"
+                    ),
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Cost of sales"
+                    )
+                )
+            formatString: "0.0"" days"""
+            displayFolder: "03 · Working Capital"
+            lineageTag: 00000001-0000-0000-0000-000000000014
+
+        measure 'Cash Conversion Cycle' =
+                [DSO (days)]
+                + [DIO (days)]
+                - [DPO (days)]
+            formatString: "0.0"" days"""
+            displayFolder: "03 · Working Capital"
+            lineageTag: 00000001-0000-0000-0000-000000000015
+
+        measure 'ROE' =
+                DIVIDE(
+                    [Net Income],
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Total stockholders' equity"
+                    )
+                )
+            formatString: "0.0%"
+            displayFolder: "04 · Returns & Leverage"
+            lineageTag: 00000001-0000-0000-0000-000000000016
+
+        measure 'ROA' =
+                DIVIDE(
+                    [Net Income],
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Total assets"
+                    )
+                )
+            formatString: "0.0%"
+            displayFolder: "04 · Returns & Leverage"
+            lineageTag: 00000001-0000-0000-0000-000000000017
+
+        measure 'Current Ratio' =
+                DIVIDE(
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Total current assets"
+                    ),
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Total current liabilities"
+                    )
+                )
+            formatString: "0.0"
+            displayFolder: "04 · Returns & Leverage"
+            lineageTag: 00000001-0000-0000-0000-000000000018
+
+        measure 'Debt-to-Equity' =
+                DIVIDE(
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Long-term debt"
+                    ),
+                    CALCULATE(
+                        SUM(Financials[Value]),
+                        Financials[Metric] = "Total stockholders' equity"
+                    )
+                )
+            formatString: "0.0"
+            displayFolder: "04 · Returns & Leverage"
+            lineageTag: 00000001-0000-0000-0000-000000000019
+
+        measure 'Book Value per Share' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Metric] = "Book value per share"
+                )
+            formatString: "$0.00"
+            displayFolder: "04 · Returns & Leverage"
+            lineageTag: 00000001-0000-0000-0000-000000000042
+
+        measure 'Revenue YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorRevenue =
+                    CALCULATE(
+                        [Net Revenue],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [Net Revenue] - PriorRevenue,
+                        PriorRevenue
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000020
+
+        measure 'Net Income YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorNetIncome =
+                    CALCULATE(
+                        [Net Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [Net Income] - PriorNetIncome,
+                        PriorNetIncome
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000021
+
+        measure 'Gross Profit YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorValue =
+                    CALCULATE(
+                        [Gross Profit],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [Gross Profit] - PriorValue,
+                        PriorValue
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000024
+
+        measure 'Operating Income YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorValue =
+                    CALCULATE(
+                        [Operating Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [Operating Income] - PriorValue,
+                        PriorValue
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000025
+
+        measure 'FCF YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorValue =
+                    CALCULATE(
+                        [Free Cash Flow],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [Free Cash Flow] - PriorValue,
+                        PriorValue
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000026
+
+        measure 'EPS YoY %' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorValue =
+                    CALCULATE(
+                        [EPS Diluted],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    DIVIDE(
+                        [EPS Diluted] - PriorValue,
+                        PriorValue
+                    )
+            formatString: "0.0%"
+            displayFolder: "05 · Growth (YoY)"
+            lineageTag: 00000001-0000-0000-0000-000000000043
+
+        measure 'Gross Margin Δ pp' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorMargin =
+                    CALCULATE(
+                        [Gross Margin %],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    ([Gross Margin %] - PriorMargin) * 100
+            formatString: "0.0"" pp"""
+            displayFolder: "06 · Margin Change (pp)"
+            lineageTag: 00000001-0000-0000-0000-000000000027
+
+        measure 'Operating Margin Δ pp' =
+                VAR CurrentYr =
+                    MAX(DimYear[YearSort])
+                VAR PriorMargin =
+                    CALCULATE(
+                        [Operating Margin %],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = CurrentYr - 1
+                        )
+                    )
+                RETURN
+                    ([Operating Margin %] - PriorMargin) * 100
+            formatString: "0.0"" pp"""
+            displayFolder: "06 · Margin Change (pp)"
+            lineageTag: 00000001-0000-0000-0000-000000000028
+
+        measure 'Revenue 5Y CAGR' =
+                VAR StartValue =
+                    CALCULATE(
+                        [Net Revenue],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = 2020
+                        )
+                    )
+                VAR EndValue =
+                    CALCULATE(
+                        [Net Revenue],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = 2025
+                        )
+                    )
+                RETURN
+                    POWER(
+                        DIVIDE(
+                            EndValue,
+                            StartValue
+                        ),
+                        1 / 5
+                    ) - 1
+            formatString: "0.0%"
+            displayFolder: "07 · CAGR"
+            lineageTag: 00000001-0000-0000-0000-000000000022
+
+        measure 'Net Income 5Y CAGR' =
+                VAR StartValue =
+                    CALCULATE(
+                        [Net Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = 2020
+                        )
+                    )
+                VAR EndValue =
+                    CALCULATE(
+                        [Net Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = 2025
+                        )
+                    )
+                RETURN
+                    POWER(
+                        DIVIDE(
+                            EndValue,
+                            StartValue
+                        ),
+                        1 / 5
+                    ) - 1
+            formatString: "0.0%"
+            displayFolder: "07 · CAGR"
+            lineageTag: 00000001-0000-0000-0000-000000000023
+
+        measure 'Revenue CAGR (Dynamic)' =
+                VAR StartYr =
+                    CALCULATE(
+                        MIN(DimYear[YearSort]),
+                        ALL(DimYear)
+                    )
+                VAR EndYr =
+                    CALCULATE(
+                        MAX(DimYear[YearSort]),
+                        ALL(DimYear)
+                    )
+                VAR StartValue =
+                    CALCULATE(
+                        [Net Revenue],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = StartYr
+                        )
+                    )
+                VAR EndValue =
+                    CALCULATE(
+                        [Net Revenue],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = EndYr
+                        )
+                    )
+                VAR Years =
+                    EndYr - StartYr
+                RETURN
+                    POWER(
+                        DIVIDE(
+                            EndValue,
+                            StartValue
+                        ),
+                        1.0 / Years
+                    ) - 1
+            formatString: "0.0%"
+            displayFolder: "07 · CAGR"
+            lineageTag: 00000001-0000-0000-0000-000000000029
+
+        measure 'Net Income CAGR (Dynamic)' =
+                VAR StartYr =
+                    CALCULATE(
+                        MIN(DimYear[YearSort]),
+                        ALL(DimYear)
+                    )
+                VAR EndYr =
+                    CALCULATE(
+                        MAX(DimYear[YearSort]),
+                        ALL(DimYear)
+                    )
+                VAR StartValue =
+                    CALCULATE(
+                        [Net Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = StartYr
+                        )
+                    )
+                VAR EndValue =
+                    CALCULATE(
+                        [Net Income],
+                        FILTER(
+                            ALL(DimYear),
+                            DimYear[YearSort] = EndYr
+                        )
+                    )
+                VAR Years =
+                    EndYr - StartYr
+                RETURN
+                    POWER(
+                        DIVIDE(
+                            EndValue,
+                            StartValue
+                        ),
+                        1.0 / Years
+                    ) - 1
+            formatString: "0.0%"
+            displayFolder: "07 · CAGR"
+            lineageTag: 00000001-0000-0000-0000-000000000030
+
+        measure 'Data Center Revenue' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Statement] = "Segment Revenue",
+                    Financials[Segment] = "Data Center"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "08 · Segments"
+            lineageTag: 00000001-0000-0000-0000-000000000031
+
+        measure 'Data Center % of Revenue' =
+                DIVIDE(
+                    [Data Center Revenue],
+                    [Net Revenue]
+                )
+            formatString: "0.0%"
+            displayFolder: "08 · Segments"
+            lineageTag: 00000001-0000-0000-0000-000000000032
+
+        measure 'Segment Revenue (Total)' =
+                CALCULATE(
+                    SUM(Financials[Value]),
+                    Financials[Statement] = "Segment Revenue"
+                )
+            formatString: "#,##0.0"
+            displayFolder: "08 · Segments"
+            lineageTag: 00000001-0000-0000-0000-000000000040
+
+        measure 'Revenue YoY Color' =
+                IF(
+                    [Revenue YoY %] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000033
+
+        measure 'Net Income YoY Color' =
+                IF(
+                    [Net Income YoY %] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000034
+
+        measure 'FCF YoY Color' =
+                IF(
+                    [FCF YoY %] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000035
+
+        measure 'Gross Profit YoY Color' =
+                IF(
+                    [Gross Profit YoY %] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000036
+
+        measure 'Operating Income YoY Color' =
+                IF(
+                    [Operating Income YoY %] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000037
+
+        measure 'Gross Margin Δ pp Color' =
+                IF(
+                    [Gross Margin Δ pp] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000038
+
+        measure 'Operating Margin Δ pp Color' =
+                IF(
+                    [Operating Margin Δ pp] >= 0,
+                    "#2E7D32",
+                    "#C62828"
+                )
+            displayFolder: "09 · Card Formatting"
+            lineageTag: 00000001-0000-0000-0000-000000000039
